@@ -1,0 +1,120 @@
+{
+  "specification_version": 1,
+  "base_spec_id": "demo-spec",
+  "tasks": [
+    {
+      "client_key": "demo-task-01",
+      "title": "client_key каждой задачи должен быть непустым и уникальным в пределах графа",
+      "description": "В рамках задачи «Добавить проверку черновика DAG перед отправкой в Tracker»: client_key каждой задачи должен быть непустым и уникальным в пределах графа;",
+      "acceptance_criteria": [
+        "client_key каждой задачи должен быть непустым и уникальным в пределах графа."
+      ],
+      "expected_result": "Реализовано требование: client_key каждой задачи должен быть непустым и уникальным в пределах графа.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": []
+    },
+    {
+      "client_key": "demo-task-02",
+      "title": "каждый depends_on должен ссылаться на существующий client_key",
+      "description": "В рамках задачи «Добавить проверку черновика DAG перед отправкой в Tracker»: каждый depends_on должен ссылаться на существующий client_key;",
+      "acceptance_criteria": [
+        "каждый depends_on должен ссылаться на существующий client_key."
+      ],
+      "expected_result": "Реализовано требование: каждый depends_on должен ссылаться на существующий client_key.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": []
+    },
+    {
+      "client_key": "demo-task-03",
+      "title": "задача не может зависеть от самой себя",
+      "description": "В рамках задачи «Добавить проверку черновика DAG перед отправкой в Tracker»: задача не может зависеть от самой себя;",
+      "acceptance_criteria": [
+        "задача не может зависеть от самой себя."
+      ],
+      "expected_result": "Реализовано требование: задача не может зависеть от самой себя.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": []
+    },
+    {
+      "client_key": "demo-task-04",
+      "title": "зависимости не должны образовывать цикл",
+      "description": "В рамках задачи «Добавить проверку черновика DAG перед отправкой в Tracker»: зависимости не должны образовывать цикл;",
+      "acceptance_criteria": [
+        "зависимости не должны образовывать цикл."
+      ],
+      "expected_result": "Реализовано требование: зависимости не должны образовывать цикл.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": [
+        "demo-task-02"
+      ]
+    },
+    {
+      "client_key": "demo-task-05",
+      "title": "у каждой задачи должен быть задан хотя бы один непустой путь change_scope",
+      "description": "В рамках задачи «Добавить проверку черновика DAG перед отправкой в Tracker»: у каждой задачи должен быть задан хотя бы один непустой путь change_scope;",
+      "acceptance_criteria": [
+        "у каждой задачи должен быть задан хотя бы один непустой путь change_scope."
+      ],
+      "expected_result": "Реализовано требование: у каждой задачи должен быть задан хотя бы один непустой путь change_scope.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": []
+    },
+    {
+      "client_key": "demo-task-06",
+      "title": "сообщение об ошибке должно указывать client_key проблемной задачи и причину",
+      "description": "В рамках задачи «Добавить проверку черновика DAG перед отправкой в Tracker»: сообщение об ошибке должно указывать client_key проблемной задачи и причину.",
+      "acceptance_criteria": [
+        "сообщение об ошибке должно указывать client_key проблемной задачи и причину."
+      ],
+      "expected_result": "Реализовано требование: сообщение об ошибке должно указывать client_key проблемной задачи и причину.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": [
+        "demo-task-01",
+        "demo-task-02",
+        "demo-task-03",
+        "demo-task-04",
+        "demo-task-05"
+      ]
+    },
+    {
+      "client_key": "demo-task-integration",
+      "title": "Подключить проверку DAG перед отправкой в Tracker",
+      "description": "Вызвать проверку после построения TaskGraphDraft и до передачи графа в Tracker; отклонять невалидный граф с понятной ошибкой.",
+      "acceptance_criteria": [
+        "Проверка выполняется до отправки графа в Tracker.",
+        "Невалидный граф не передаётся в Tracker."
+      ],
+      "expected_result": "Валидный граф готов к передаче; невалидный отклонён локально.",
+      "change_scope": [
+        "src/orchestrator/domain",
+        "src/orchestrator/orchestration"
+      ],
+      "depends_on": [
+        "demo-task-01",
+        "demo-task-02",
+        "demo-task-03",
+        "demo-task-04",
+        "demo-task-05",
+        "demo-task-06"
+      ]
+    }
+  ]
+}

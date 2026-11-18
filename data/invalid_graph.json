@@ -1,0 +1,24 @@
+{
+  "specification_version": 1,
+  "base_spec_id": "demo-spec",
+  "tasks": [
+    {
+      "client_key": "cycle-a",
+      "title": "Задача A",
+      "description": "Первый узел цикла",
+      "acceptance_criteria": ["Задача выполнена"],
+      "expected_result": "Результат A",
+      "change_scope": ["src/orchestrator"],
+      "depends_on": ["cycle-b"]
+    },
+    {
+      "client_key": "cycle-b",
+      "title": "Задача B",
+      "description": "Второй узел цикла",
+      "acceptance_criteria": ["Задача выполнена"],
+      "expected_result": "Результат B",
+      "change_scope": ["src/orchestrator"],
+      "depends_on": ["cycle-a"]
+    }
+  ]
+}
