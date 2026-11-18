@@ -12,6 +12,7 @@ class ExecutionManager:
         while True:
             tasks = await self._tracker.get_executable_tasks(graph_id)
             if not tasks:
+                print("[ORCHESTRATOR] цикл остановлен: больше нет executable задач")
                 return
 
             print(f"[ORCHESTRATOR] executable задач: {len(tasks)}")
@@ -42,6 +43,10 @@ class ExecutionManager:
                 expected_version=attempt.version,
             )
             print(f"[ORCHESTRATOR] fail {task.client_key}: {error}")
+            print(
+                f"[TRACKER] {task.client_key} status=failed; "
+                "продолжаю обработку остальных executable задач"
+            )
             return
 
         await self._tracker.complete_attempt(

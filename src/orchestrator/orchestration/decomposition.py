@@ -31,4 +31,6 @@ def load_task_graph(path: str | Path) -> TaskGraphDraft:
         raise ValueError(
             f"task graph is not valid JSON at line {error.lineno}, column {error.colno}"
         ) from error
-    return TaskGraphDraft.from_mapping(payload)
+    draft = TaskGraphDraft.from_mapping(payload)
+    validate_task_graph(draft)
+    return draft

@@ -66,8 +66,8 @@ python .\scripts\run_demo.py
 python .\scripts\run_demo.py --input .\data\invalid_graph.json
 ```
 
-Для демонстрации отказа заглушки-исполнителя:
+Для демонстрации отказа заглушки-исполнителя на текущем `input_graph.json`:
 
 ```powershell
-python .\scripts\run_demo.py --fail-task demo-task-03
+python .\scripts\run_demo.py --fail-task validate-scope
 ```

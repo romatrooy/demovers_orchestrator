@@ -67,10 +67,26 @@ class MockTrackerClient:
         for task_id, task in self._tasks.items():
             if task.status not in (TaskStatus.CREATED, TaskStatus.READY):
                 continue
-            if all(dependency in completed_keys for dependency in self._dependencies[task_id]):
+            dependencies = self._dependencies[task_id]
+            waiting = [dependency for dependency in dependencies if dependency not in completed_keys]
+            if not waiting:
                 task.status = TaskStatus.READY
                 task.executable = True
                 executable.append(replace(task))
+                reason = "нет зависимостей" if not dependencies else "приняты: " + ", ".join(dependencies)
+                print(f"[MOCK TRACKER] {task.client_key} executable: {reason}")
+            else:
+                failed_keys = {
+                    candidate.client_key
+                    for candidate in self._tasks.values()
+                    if candidate.status == TaskStatus.FAILED
+                }
+                failed_dependencies = [key for key in waiting if key in failed_keys]
+                if failed_dependencies:
+                    reason = "зависимости завершились fail: " + ", ".join(failed_dependencies)
+                else:
+                    reason = "ожидает: " + ", ".join(waiting)
+                print(f"[MOCK TRACKER] {task.client_key} пока не executable: {reason}")
         return executable
 
     async def assign(
